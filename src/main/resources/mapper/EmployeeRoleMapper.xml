@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.call110.business.dao.mapper.EmployeeRoleMapper" >
+    <resultMap id="BaseResultMap" type="com.call110.business.entity.EmployeeRole" >
+        <id column="EID" property="eid" jdbcType="BIGINT" />
+        <id column="RID" property="rid" jdbcType="BIGINT" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.call110.business.entity.EmployeeRole" >
+        insert into cr_employee_role (EID, RID)
+        values (#{eid,jdbcType=BIGINT}, #{rid,jdbcType=BIGINT})
+    </insert>
+
+    <delete id="deleteByPrimaryKey" parameterType="com.call110.business.entity.EmployeeRole" >
+        delete from cr_employee_role
+        where EID = #{eid,jdbcType=BIGINT}
+          and RID = #{rid,jdbcType=BIGINT}
+    </delete>
+
+</mapper>

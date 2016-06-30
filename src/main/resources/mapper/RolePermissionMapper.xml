@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.call110.business.dao.mapper.RolePermissionMapper" >
+    <resultMap id="BaseResultMap" type="com.call110.business.entity.RolePermission" >
+        <id column="PID" property="pid" jdbcType="BIGINT" />
+        <id column="RID" property="rid" jdbcType="BIGINT" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.call110.business.entity.RolePermission" >
+        insert into cr_role_permission (PID, RID)
+        values (#{pid,jdbcType=BIGINT}, #{rid,jdbcType=BIGINT})
+    </insert>
+
+    <delete id="deleteByPrimaryKey" parameterType="com.call110.business.entity.RolePermission" >
+        delete from cr_role_permission
+        where PID = #{pid,jdbcType=BIGINT}
+          and RID = #{rid,jdbcType=BIGINT}
+    </delete>
+
+</mapper>

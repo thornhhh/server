@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.call110.business.dao.mapper.RoleMapper" >
+    <resultMap id="BaseResultMap" type="com.call110.business.entity.Role" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="NAME" property="name" jdbcType="VARCHAR" />
+        <collection property="permissions" javaType="java.util.ArrayList" ofType="com.call110.business.entity.Permission">
+	    	<id column="PID" property="id" jdbcType="BIGINT" />
+	        <result column="PNAME" property="name" jdbcType="VARCHAR" />
+	        <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+	        <result column="URL" property="url" jdbcType="VARCHAR" />
+	        <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
+	        <result column="TYPE" property="type" jdbcType="INTEGER" />
+	    </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, NAME
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select 
+        <include refid="Base_Column_List" />
+        from cr_role
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="com.call110.business.entity.Role" >
+        insert into cr_role (ID, NAME)
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.call110.business.entity.Role" >
+        update cr_role
+        <set >
+            <if test="name != null" >
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from cr_role
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+
+	<!-- <select id="findByEid" parameterType="java.lang.Long" resultType="BaseResultMap">
+     	select role.id,role.name,p.id as pid,p.name as pname,p.description,p.url,p.type,p.is_del from 
+ 		(select r.*, rp.pid from cr_employee_role er, cr_role r left join cr_role_permission rp on rp.rid = r.id and er.eid=#{eid}) 
+ 		role left join cr_permission p on role.pid = p.id and p.is_del = 0 
+    </select> -->
+</mapper>

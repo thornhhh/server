@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.call110.business.dao.mapper.EmployeeLogMapper" >
+    <resultMap id="BaseResultMap" type="com.call110.business.entity.EmployeeLog" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="EID" property="eid" jdbcType="BIGINT" />
+        <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+        <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, EID, CONTENT, IS_DEL, CREATE_TIME
+    </sql>
+    
+    <select id="list" resultType="com.call110.business.vo.LogVO">
+    select 
+	    l.content,
+	    l.create_time as time,
+	    l.eid,
+	    (select name from cr_employee where id = l.eid) as name
+    from cr_employee_log l
+    where 1=1
+    <if test="beginTime != null" >
+			and l.create_Time >= #{beginTime}
+		</if>
+		<if test="endTime != null" >
+			and l.create_Time &lt;= #{endTime}
+		</if>
+		<if test="eid != null" >
+			and l.eid = #{eid}
+		</if>
+		order by l.create_time desc
+		limit #{page},10
+    </select>
+    
+    <select id="maxPage" resultType="java.lang.Long">
+    select ceil(count(*)/10) 
+    from cr_employee_log l
+    where 1=1
+    <if test="beginTime != null" >
+			and l.create_Time >= #{beginTime}
+		</if>
+		<if test="endTime != null" >
+			and l.create_Time &lt;= #{endTime}
+		</if>
+		<if test="eid != null" >
+			and l.eid = #{eid}
+		</if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select 
+        <include refid="Base_Column_List" />
+        from cr_employee_log
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="com.call110.business.entity.EmployeeLog" >
+        insert into cr_employee_log (ID, EID, CONTENT, 
+            IS_DEL, CREATE_TIME)
+        values (#{id,jdbcType=BIGINT}, #{eid,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, 
+            #{isDel,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.call110.business.entity.EmployeeLog" >
+        update cr_employee_log
+        <set >
+            <if test="eid != null" >
+                EID = #{eid,jdbcType=BIGINT},
+            </if>
+            <if test="content != null" >
+                CONTENT = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="isDel != null" >
+                IS_DEL = #{isDel,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME = #{createTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from cr_employee_log
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+
+</mapper>

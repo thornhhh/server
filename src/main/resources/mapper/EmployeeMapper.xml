@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.call110.business.dao.mapper.EmployeeMapper" >
+    <resultMap id="BaseResultMap" type="com.call110.business.entity.Employee" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+        <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+        <result column="NAME" property="name" jdbcType="VARCHAR" />
+        <result column="NICKNAME" property="nickname" jdbcType="VARCHAR" />
+        <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="BIGINT" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, USERNAME, PASSWORD, NAME, NICKNAME, IS_DEL, CREATE_TIME, MODIFY_TIME
+    </sql>
+    
+	<select id="list" resultType="com.call110.business.vo.EmployeeVO">
+	    select e.ID,e.CREATE_TIME as createTime,e.IS_DEL AS isDel,e.MODIFY_TIME as modifyTime,e.NAME,e.USERNAME,e.NICKNAME,
+	    (select GROUP_CONCAT(r.name) from cr_employee_role er, 
+	    cr_role r where er.RID = r.ID and er.EID = e.ID) as roleName from cr_employee e where e.is_del = 0 
+    	<if test="name != null" >
+			and e.name like CONCAT('%',#{name},'%') 
+		</if>
+		order by e.create_time desc
+		limit #{page},10
+	</select>
+	
+	<select id="get" resultType="com.call110.business.vo.EmployeeVO">
+	     select e.ID,e.CREATE_TIME as createTime,e.IS_DEL AS isDel,e.MODIFY_TIME as modifyTime,e.NAME,e.USERNAME,e.NICKNAME,
+	    (select GROUP_CONCAT(r.id) from cr_employee_role er, 
+	    cr_role r where er.RID = r.ID and er.EID = e.ID) as roleName from cr_employee e where e.is_del = 0 and id = #{param1}
+	</select>
+    
+     <select id="maxPage" resultType="java.lang.Long">
+    	select 
+    	ceil(count(*)/10) 
+	    from cr_employee e
+	    where is_del = 0
+    	<if test="name != null" >
+			and e.name like CONCAT('%',#{name},'%')
+		</if>
+		order by e.create_time desc
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select 
+        <include refid="Base_Column_List" />
+        from cr_employee
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="com.call110.business.entity.Employee" useGeneratedKeys="true" keyProperty="id">
+        insert into cr_employee (ID, USERNAME, PASSWORD, 
+            NAME, NICKNAME, IS_DEL, 
+            CREATE_TIME, MODIFY_TIME)
+        values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+            #{name,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{isDel,jdbcType=INTEGER}, 
+            #{createTime,jdbcType=BIGINT}, #{modifyTime,jdbcType=BIGINT})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.call110.business.entity.Employee" >
+        update cr_employee
+        <set >
+            <if test="username != null" >
+                USERNAME = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                PASSWORD = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null" >
+                NICKNAME = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="isDel != null" >
+                IS_DEL = #{isDel,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME = #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null" >
+                MODIFY_TIME = #{modifyTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+    
+    <update id="updateByPrimaryKey" parameterType="com.call110.business.entity.Employee">
+        update cr_employee
+        <set >
+			USERNAME = #{username,jdbcType=VARCHAR},
+			PASSWORD = #{password,jdbcType=VARCHAR},
+			NAME = #{name,jdbcType=VARCHAR},
+			NICKNAME = #{nickname,jdbcType=VARCHAR},
+			IS_DEL = #{isDel,jdbcType=INTEGER},
+			CREATE_TIME = #{createTime,jdbcType=BIGINT},
+			MODIFY_TIME = #{modifyTime,jdbcType=BIGINT},
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from cr_employee
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+
+</mapper>

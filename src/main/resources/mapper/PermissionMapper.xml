@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.call110.business.dao.mapper.PermissionMapper" >
+    <resultMap id="BaseResultMap" type="com.call110.business.entity.Permission" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="NAME" property="name" jdbcType="VARCHAR" />
+        <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+        <result column="URL" property="url" jdbcType="VARCHAR" />
+        <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
+        <result column="TYPE" property="type" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, NAME, DESCRIPTION, IS_DEL, URL, TYPE
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select 
+        <include refid="Base_Column_List" />
+        from cr_permission
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="com.call110.business.entity.Permission" >
+        insert into cr_permission (ID, NAME, DESCRIPTION, URL,IS_DEL,TYPE)
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+            #{url,jdbcType=VARCHAR}, #{isDel,jdbcType=INTEGER}, #{type,jdbcType=INTEGER})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.call110.business.entity.Permission" >
+        update cr_permission
+        <set >
+            <if test="name != null" >
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null" >
+                DESCRIPTION = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null" >
+                URL = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="isDel != null" >
+                IS_DEL = #{isDel,jdbcType=INTEGER},
+            </if>
+            <if test="type != null" >
+                TYPE = #{type,jdbcType=INTEGER},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from cr_permission
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+
+</mapper>
