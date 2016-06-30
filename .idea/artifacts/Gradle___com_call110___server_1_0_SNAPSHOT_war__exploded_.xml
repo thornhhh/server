@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="Gradle : com.zql : server-1.0-SNAPSHOT.war (exploded)">
+  <artifact type="exploded-war" name="Gradle : com.call110 : server-1.0-SNAPSHOT.war (exploded)">
     <output-path>$PROJECT_DIR$/out/artifacts/server/exploded/server-1.0-SNAPSHOT.war</output-path>
     <properties id="gradle-properties">
       <options external-project-path="$PROJECT_DIR$" />

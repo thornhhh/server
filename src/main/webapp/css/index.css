@@ -1,0 +1,99 @@
+a[href='logout']{
+	color:white;
+	text-decoration: underline;
+}
+.index-header{
+	background-color:#666;
+	width:100%;
+	color:white;
+	font-size:2.2em;
+	padding:10px 15px;
+	position: absolute;
+	top:0;
+	z-index:2;
+	height:78px;
+}
+.index-header.normal{
+	position:relative!important; 
+}
+.normal div.form-group{
+    display: inline-block;
+    width: 700px;
+    margin: 0 auto;
+}
+.index-header img{
+	width:58px;
+	height:58px;
+	display:inline-block;
+	margin-right:10px;
+}
+.index-header span{
+	font-size:.65em;
+	float:right;
+	line-height:4em;
+	margin-right:10px;
+}
+.index-leftbar{
+	background-color:#e3e3e3;
+	position: absolute;
+	height:100%;
+	top:0;
+	padding-top:78px;
+	width:220px;
+	z-index:1;
+}
+.index-leftbar li{
+	transition-property:border;
+	transition-duration:.3s;
+	color:#525252;
+	padding:20px;
+	font-size:1.4em;
+	padding-left:40px;
+	text-align:left;
+	cursor:pointer;
+}
+.index-leftbar div{
+	display: none;
+	background-color:#EFEFEF; 
+}
+.index-leftbar li.current{
+	border-left:10px solid #525252;
+	cursor:default;
+}
+.main-container{
+	position:absolute;
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+	padding-top:78px; 
+	padding-left:220px;
+	overflow:hidden;
+}
+.main-container iframe{
+	width:100%;
+	height:100%;
+	max-width:100%;
+	max-height:100%;
+	border:0;
+}
+form.login{
+	width:500px;
+	display:block;
+	margin:0 auto;
+	margin-top:50px; 
+}
+form.login button{
+	float:right;
+	margin-right:30px;
+	width:100px;
+}
+form.login .input-group-addon{
+	width:70px;
+}
+form.login .input-group{
+	margin-bottom:10px;
+}
+form.login .form-control{
+	width:400px;
+}

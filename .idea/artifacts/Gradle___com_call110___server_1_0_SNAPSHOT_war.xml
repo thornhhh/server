@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="war" name="Gradle : com.zql : server-1.0-SNAPSHOT.war">
+  <artifact type="war" name="Gradle : com.call110 : server-1.0-SNAPSHOT.war">
     <output-path>$PROJECT_DIR$/out/artifacts/server</output-path>
     <properties id="gradle-properties">
       <options external-project-path="$PROJECT_DIR$" />
