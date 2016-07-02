@@ -1,6 +1,6 @@
-<%@ page language="java" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
+<%@page language="java" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <c:set var="sysPath" value="${pageContext.request.contextPath}"/>
 <c:if test="${sysPath=='/'}">
 	<c:set var="sysPath" value="" />

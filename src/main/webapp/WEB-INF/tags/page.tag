@@ -1,28 +1,27 @@
 <%@tag pageEncoding="UTF-8"%>
-<%@ attribute name="page" type="com.madi.manage.common.pageable.Page"
-	required="true"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@attribute name="pagebaen" type="com.call110.common.pageable.Page" required="true"%>
 <%
-	int current = page.getPageNo();
+	int current = pagebaen.getPageNo();
 	int begin = 1;
-	int end = page.getTotalPage();
+	int end = pagebaen.getTotalPage();
 
 	request.setAttribute("current", current);
 	request.setAttribute("begin", begin);
 	request.setAttribute("end", end);
-	request.setAttribute("pList", page.getPageNoDisp());
+	request.setAttribute("pList", pagebaen.getPageNoDisp());
 %>
 <script type="text/javascript">  
-	var paras = '<%=page.getParaJson()%>';  
+	var paras = '<%=pagebaen.getParaJson()%>';
 	var paraJson = eval('(' + paras + ')');  
   
 	//将提交参数转换为JSON  
-	var paraLists = '<%=page.getParaListJson()%>';  
+	var paraLists = '<%=pagebaen.getParaListJson()%>';
 	var paraListJson = eval('(' + paraLists + ')');  
 	function pageClick( pNo ){  
 		
 		paraJson["pageNo"] = pNo;  
-		paraJson["pageSize"] = "<%=page.getPageSize()%>";  
+		paraJson["pageSize"] = "<%=pagebaen.getPageSize()%>";
   
 		var jsPost = function(action, values, valueLists) {  
 			var id = Math.random();  
@@ -40,7 +39,7 @@
 		}  
   
 		//发送POST  
-		jsPost("<%=request.getContextPath()%>"+"<%=page.getSearchUrl()%>", paraJson, paraListJson);
+		jsPost("<%=request.getContextPath()%>"+"<%=pagebaen.getSearchUrl()%>", paraJson, paraListJson);
 	}
 </script>
 <div class="page-pull-right">

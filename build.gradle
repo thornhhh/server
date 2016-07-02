@@ -41,5 +41,6 @@ dependencies {
     compile("org.apache.shiro:shiro-core:1.2.5")
     compile("org.apache.shiro:shiro-spring:1.2.5")
     compile("org.apache.shiro:shiro-ehcache:1.2.5")
+    compile("javax.servlet:jstl:1.2")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
